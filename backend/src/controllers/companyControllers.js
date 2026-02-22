@@ -273,21 +273,7 @@ export const getBranchDetails = asyncHandler(async (req, res) => {
 
 // Drop down api
 export const cities = [
-  { city: "Mumbai", state: "Maharashtra", country: "India" },
-  { city: "Delhi", state: "Delhi", country: "India" },
-  { city: "Bangalore", state: "Karnataka", country: "India" },
-  { city: "Hyderabad", state: "Telangana", country: "India" },
-  { city: "Chennai", state: "Tamil Nadu", country: "India" },
-  { city: "Pune", state: "Maharashtra", country: "India" },
-  { city: "Ahmedabad", state: "Gujarat", country: "India" },
-  { city: "Kolkata", state: "West Bengal", country: "India" },
-  { city: "Surat", state: "Gujarat", country: "India" },
-  { city: "Jaipur", state: "Rajasthan", country: "India" },
-  { city: "Coimbatore", state: "Tamil Nadu", country: "India" },
-  { city: "Madurai", state: "Tamil Nadu", country: "India" },
-  { city: "Noida", state: "Uttar Pradesh", country: "India" },
-  { city: "Gurgaon", state: "Haryana", country: "India" },
-  { city: "Lucknow", state: "Uttar Pradesh", country: "India" },
+  { city: "Natham", state: "Tamil Nadu", country: "India" },
 ];
 export const getCities = (req, res) => {
   res.json(cities);

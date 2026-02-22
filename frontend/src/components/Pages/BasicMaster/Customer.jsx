@@ -8,6 +8,7 @@ import {
   X,
   ArrowLeft,
   Package,
+  Users,
 } from "lucide-react";
 import CommonListView from "../../commonfile/CommonListView";
 import { toast } from "react-hot-toast";
@@ -15,9 +16,8 @@ import { useForm } from "react-hook-form";
 import api from "../../../utilis/api";
 import { useNavigate } from "react-router-dom";
 
-const Item = () => {
+const Customer = () => {
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -27,12 +27,14 @@ const Item = () => {
   } = useForm({
     mode: "onChange",
     defaultValues: {
-      itemCode: "",
-      itemName: "",
-      itemType: "",
-      category: "",
-      qty: 0,
-      rent: 0,
+      customerCode: "",
+      customerName: "",
+      mobileNo: "",
+      address: "",
+      city: "",
+      aadharNo: "",
+      refName: "",
+      refMobileNo: "",
       status: "Active",
     },
   });
@@ -54,18 +56,19 @@ const Item = () => {
         data.id = edit._id;
       }
       const res = await api.put(
-        `/master/createItem?orgId=${orgId}&branchId=${branchId}`,
+        `/master/createCustomer?orgId=${orgId}&branchId=${branchId}`,
         data,
       );
       toast.success(res.data.paramObjectsMap.message);
       await fetchCurrentCode();
       reset({
-        // itemCode: "",
-        itemName: "",
-        itemType: "",
-        category: "",
-        qty: 0,
-        rent: 0,
+        customerName: "",
+        mobileNo: "",
+        address: "",
+        city: "",
+        aadharNo: "",
+        refName: "",
+        refMobileNo: "",
         status: "Active",
       });
       setEdit(null);
@@ -81,12 +84,14 @@ const Item = () => {
   const AddNew = async () => {
     setOpenDialog(true);
     reset({
-      itemCode: "",
-      itemName: "",
-      itemType: "",
-      category: "",
-      qty: 0,
-      rent: 0,
+      customerCode: "",
+      customerName: "",
+      mobileNo: "",
+      address: "",
+      city: "",
+      aadharNo: "",
+      refName: "",
+      refMobileNo: "",
       status: "Active",
     });
     setEdit(null);
@@ -100,7 +105,7 @@ const Item = () => {
   const getAll = async (pageNo) => {
     try {
       const res = await api.get(
-        `/master/getAllItems?orgId=${orgId}&branchId=${branchId}&page=${pageNo}&limit=${limit}`,
+        `/master/getAllCustomer?orgId=${orgId}&branchId=${branchId}&page=${pageNo}&limit=${limit}`,
       );
       const apiData = res.data.paramObjectsMap.data;
       console.log(apiData);
@@ -115,18 +120,20 @@ const Item = () => {
     console.log("ID:", _id);
     try {
       const res = await api.get(
-        `/master/getItemById/${_id}?orgId=${orgId}&branchId=${branchId}`,
+        `/master/getCustomerById/${_id}?orgId=${orgId}&branchId=${branchId}`,
       );
       const data = res.data.paramObjectsMap.data;
       setEdit(data);
       setOpenDialog(true);
       reset({
-        itemCode: data.itemCode,
-        itemName: data.itemName,
-        itemType: data.itemType,
-        category: data.category,
-        qty: data.qty,
-        rent: data.rent,
+        customerCode: data.customerCode,
+        customerName: data.customerName,
+        mobileNo: data.mobileNo,
+        address: data.address,
+        city: data.city,
+        aadharNo: data.aadharNo,
+        refName: data.refName,
+        refMobileNo: data.refMobileNo,
         status: data.status,
       });
     } catch (err) {
@@ -139,28 +146,27 @@ const Item = () => {
   }, [page]);
 
   const columns = [
-    { label: "Item Code", key: "itemCode", searchable: true },
-    { label: "Item Name", key: "itemName", searchable: true },
-    { label: "Item Type", key: "itemType", searchable: true },
-    { label: "Category", key: "category", searchable: true },
-    // { label: "Qty", key: "qty", searchable: true },
-    { label: "Rent", key: "rent", searchable: true },
+    { label: "Customer Code", key: "customerCode", searchable: true },
+    { label: "Customer Name", key: "customerName", searchable: true },
+    { label: "Mobile No", key: "mobileNo", searchable: true },
+    { label: "Address", key: "address", searchable: true },
+    { label: "City", key: "city", searchable: true },
     { label: "Status", key: "status", type: "status" },
     { label: "Action", key: "action" },
   ];
 
   const fetchCurrentCode = async () => {
     const res = await api.get(
-      `/master/generateCode?orgId=${orgId}&branchId=${branchId}`,
+      `/master/getCustomerCode?orgId=${orgId}&branchId=${branchId}`,
     );
     const code = res.data.paramObjectsMap.data;
-    setValue("itemCode", code);
+    setValue("customerCode", code);
   };
 
   return (
     <>
       <h3 className="text-md font-semibold tracking-wide dark:text-slate-100 mb-1">
-        Item
+        Customer
       </h3>
       <div className="flex justify-end gap-2 mb-2">
         <button
@@ -196,9 +202,9 @@ const Item = () => {
       </div>
       <div className="mb-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card
-          title="Total Item"
+          title="Total Customer"
           value={getAllData.totalCount}
-          icon={Package}
+          icon={Users}
           gradient="from-indigo-500 to-purple-600"
         />
         <Card
@@ -246,7 +252,7 @@ const Item = () => {
                 <div className="flex items-center gap-2">
                   {/* Icon */}
                   <div className="p-1.5 rounded-lg bg-blue-600">
-                    <Package className="w-4 h-4 text-white" />
+                    <Users className="w-4 h-4 text-white" />
                   </div>
 
                   {/* Gradient Title */}
@@ -257,14 +263,14 @@ const Item = () => {
         bg-clip-text text-transparent
       "
                   >
-                    Item Details
+                    Customer Details
                   </h2>
                 </div>
 
                 {/* Subtitle */}
                 <p className="text-sm text-slate-800 dark:text-slate-400">
-                  Manage all items available for rent, including categories,
-                  details, and classifications across your system.
+                  Manage all your customers, their details, and contact
+                  information used across your rental system
                 </p>
               </div>
 
@@ -290,105 +296,145 @@ const Item = () => {
             {/* Form */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                {/* Item Code */}
+                {/*   Customer Code */}
                 <div className="flex flex-col">
                   <label className="text-sm text-slate-800 dark:text-slate-300">
-                    Item Code*
+                    Customer Code*
                   </label>
                   <input
                     type="text"
                     disabled
-                    {...register("itemCode", {})}
+                    {...register("customerCode", {})}
                     className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   />
                 </div>
 
-                {/* Item Name */}
+                {/* Customer Name */}
                 <div className="flex flex-col">
                   <label className="text-sm text-slate-800 dark:text-slate-300">
-                    Item Name*
+                    Customer Name*
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Chair"
-                    {...register("itemName", {
-                      required: "Item Name is required",
+                    placeholder="e.g. Sheik"
+                    {...register("customerName", {
+                      required: "Customer Name is required",
                     })}
                     className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   />
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.itemName?.message}
+                    {errors.customerName?.message}
                   </p>
                 </div>
 
-                {/* Item Type */}
+                {/* Mobile No */}
                 <div className="flex flex-col">
                   <label className="text-sm text-slate-800 dark:text-slate-300">
-                    Item Type*
+                    Mobile No*
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Plastic"
-                    {...register("itemType", {
-                      required: "Item Type is required",
+                    placeholder="e.g. 9629295177"
+                    {...register("mobileNo", {
+                      required: "Mobile No is required",
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message: "Enter valid 10 digit mobile no",
+                      },
                     })}
                     className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   />
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.itemType?.message}
+                    {errors.mobileNo?.message}
                   </p>
                 </div>
-                {/* Category */}
+                {/* address */}
                 <div className="flex flex-col">
                   <label className="text-sm text-slate-800 dark:text-slate-300">
-                    Category*
+                    Address*
                   </label>
                   <input
                     type="text"
-                    placeholder="e.g. Furniture"
-                    {...register("category", {
-                      required: "Category is required",
+                    placeholder="e.g. South Street"
+                    {...register("address", {
+                      required: "Address is required",
                     })}
                     className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   />
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.category?.message}
+                    {errors.address?.message}
                   </p>
                 </div>
 
-                {/* qty */}
+                {/* city */}
                 <div className="flex flex-col">
                   <label className="text-sm text-slate-800 dark:text-slate-300">
-                    Quantity*
+                    City*
                   </label>
                   <input
-                    type="number"
-                    placeholder="e.g. 100"
-                    {...register("qty", {
-                      required: "Quantity is required",
+                    type="text"
+                    placeholder="e.g. Natham"
+                    {...register("city", {
+                      required: "City is required",
                     })}
                     className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   />
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.qty?.message}
+                    {errors.city?.message}
                   </p>
                 </div>
 
-                {/* rent */}
+                {/* Aadhar No */}
                 <div className="flex flex-col">
                   <label className="text-sm text-slate-800 dark:text-slate-300">
-                    Rent Price/Day*
+                    Aadhar No
                   </label>
                   <input
-                    type="number"
-                    placeholder="e.g. 100"
-                    {...register("rent", {
-                      required: "Rent Price/Day is required",
+                    type="text"
+                    placeholder="e.g. Enter 12-digit Aadhar No"
+                    {...register("aadharNo", {
+                      pattern: {
+                        value: /^[0-9]{12}$/,
+                        message: "Aadhar number must be 12 digits",
+                      },
                     })}
                     className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   />
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.rent?.message}
+                    {errors.aadharNo?.message}
+                  </p>
+                </div>
+                {/*ref name */}
+                <div className="flex flex-col">
+                  <label className="text-sm text-slate-800 dark:text-slate-300">
+                    Ref Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Mohamed"
+                    {...register("refName")}
+                    className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  />
+                </div>
+
+                {/*ref mobilr no */}
+                <div className="flex flex-col">
+                  <label className="text-sm text-slate-800 dark:text-slate-300">
+                    Ref Mobile No
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 9486504027"
+                    {...register("refMobileNo", {
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message: "Enter valid 10 digit ref mobile number",
+                      },
+                    })}
+                    className="w-full px-2 py-1 border rounded-lg dark:bg-slate-800 dark:border-slate-700 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                  />
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.refMobileNo?.message}
                   </p>
                 </div>
 
@@ -450,4 +496,4 @@ const Item = () => {
   );
 };
 
-export default Item;
+export default Customer;

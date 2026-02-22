@@ -505,7 +505,7 @@ const CompanyDetails = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="9792921578"
+                    placeholder="e.g. 9792921578"
                     {...register("mobileNo", {
                       required: "Mobile No is required",
                       pattern: {

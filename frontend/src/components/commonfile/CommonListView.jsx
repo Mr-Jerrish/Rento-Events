@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
+import dayjs from "dayjs";
 import {
   Search,
   Upload,
@@ -254,6 +255,8 @@ const CommonListView = ({
                           >
                             ● {row[col.key]}
                           </span>
+                        ) : col.type === "date" ? (
+                          dayjs(row[col.key]).format("DD-MM-YYYY")
                         ) : (
                           row[col.key]
                         )}

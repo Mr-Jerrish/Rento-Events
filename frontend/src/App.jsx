@@ -8,7 +8,8 @@ import Signup from "./components/signpages/Signup";
 import Signin from "./components/signpages/Signin";
 import ChangePassword from "./components/signpages/ChangePassword";
 import Item from "./components/Pages/BasicMaster/Item";
-
+import Customer from "./components/Pages/BasicMaster/Customer";
+import EmployeeDetails from "./components/Pages/BasicMaster/EmployeeDetails";
 function App() {
   return (
     <Routes>
@@ -26,6 +27,11 @@ function App() {
         <Route path="companysetup" element={<CompanySetup />} />
         <Route path="BasicMaster" element={<BasicMaster />} />
         <Route path="BasicMaster/Item" element={<Item />} />
+        <Route path="BasicMaster/Customer" element={<Customer />} />
+        <Route
+          path="BasicMaster/EmployeeDetails"
+          element={<EmployeeDetails />}
+        />
       </Route>
     </Routes>
   );

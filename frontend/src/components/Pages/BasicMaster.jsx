@@ -1,14 +1,4 @@
-import React from "react";
-import {
-  Settings,
-  Factory,
-  CarFront,
-  Layers,
-  IndianRupee,
-  FileText,
-  Boxes,
-  Package,
-} from "lucide-react";
+import { Settings, UserCheck, Package, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
@@ -24,45 +14,17 @@ const BasicMaster = () => {
     },
     {
       id: 2,
-      screenName: "Brand",
-      url: "/brand",
-      icon: Factory,
+      screenName: "Customer",
+      url: "/dashboard/BasicMaster/Customer",
+      icon: Users,
       bg: "from-purple-500 to-pink-500",
     },
     {
       id: 3,
-      screenName: "Model",
-      url: "/model",
-      icon: CarFront,
-      bg: "from-emerald-500 to-teal-500",
-    },
-    {
-      id: 4,
-      screenName: "Variant",
-      url: "/variant",
-      icon: Layers,
-      bg: "from-orange-500 to-amber-500",
-    },
-    {
-      id: 5,
-      screenName: "Price Master",
-      url: "/price-master",
-      icon: IndianRupee,
-      bg: "from-green-500 to-lime-500",
-    },
-    {
-      id: 6,
-      screenName: "Vehicle Documents",
-      url: "/vehicle-documents",
-      icon: FileText,
+      screenName: "Employee",
+      url: "/dashboard/BasicMaster/EmployeeDetails",
+      icon: UserCheck,
       bg: "from-indigo-500 to-blue-500",
-    },
-    {
-      id: 7,
-      screenName: "Stock View",
-      url: "/stock-view",
-      icon: Boxes,
-      bg: "from-rose-500 to-red-500",
     },
   ];
 
@@ -88,7 +50,7 @@ const BasicMaster = () => {
       >
         {/* Header */}
 
-        <div className="flex flex-row items-center justify-center mb-4  gap-2">
+        <div className="flex flex-row items-center  mb-4  gap-2">
           {/* Icon */}
           <div className="bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-md p-2 rounded-lg">
             <Settings className="h-7 w-7 animate-bounce" />

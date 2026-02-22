@@ -33,13 +33,30 @@ const Global = () => {
     getBranchDetails();
   }, []);
 
+  // const getBranchDetails = async () => {
+  //   try {
+  //     const res = await api.get("/company/getBranchDetails");
+  //     const branches = res.data.paramObjectsMap.data;
+  //     setBranchDetails(branches);
+  //     if (branchDetails.length > 0) {
+  //       const firstBranch = branchDetails[0];
+  //       setBranchId(firstBranch._id);
+  //       setBranchName(firstBranch.branchName);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching branch details", error);
+  //   }
+  // };
+
   const getBranchDetails = async () => {
     try {
       const res = await api.get("/company/getBranchDetails");
       const branches = res.data.paramObjectsMap.data;
       setBranchDetails(branches);
-      if (branchDetails.length > 0) {
-        const firstBranch = branchDetails[0];
+
+      // Directly use 'branches' instead of 'branchDetails'
+      if (branches.length > 0) {
+        const firstBranch = branches[0];
         setBranchId(firstBranch._id);
         setBranchName(firstBranch.branchName);
       }
